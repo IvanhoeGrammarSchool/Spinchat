@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <title>test page</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+</head>
+<body>
+    <div class="app">
+        <div>This is purely a test page, tap  <a href="index.html">here to get back home</a></div>
+        <iframe id="video1" width="100%" height="215" src="http://www.youtube.com/embed/ylhVTQSzBj4?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+
+        <script type="text/javascript">
+            var tag = document.createElement('script');
+            tag.id = 'video1';
+            tag.src = 'https://www.youtube.com/iframe_api';
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            var player;
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('video1', {
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+            function onPlayerReady(event) {
+                document.getElementById('video1').style.borderColor = '#FF6D00';
+            }
+            function changeBorderColor(playerStatus) {
+                var color;
+                if (playerStatus == -1) {
+                    color = "#37474F"; // unstarted = gray
+                } else if (playerStatus == 0) {
+                    color = "#FFFF00"; // ended = yellow
+                } else if (playerStatus == 1) {
+                    color = "#33691E"; // playing = green
+                } else if (playerStatus == 2) {
+                    color = "#DD2C00"; // paused = red
+                } else if (playerStatus == 3) {
+                    color = "#AA00FF"; // buffering = purple
+                } else if (playerStatus == 5) {
+                    color = "#FF6DOO"; // video cued = orange
+                }
+                if (color) {
+                    document.getElementById('video1').style.borderColor = color;
+                }
+            }
+            function onPlayerStateChange(event) {
+                changeBorderColor(event.data);
+            }
+        </script>
+        <!--<a onclick="playVideo()" href="#">PLAY VIDEO</a>
+
+        <div id="player"></div>
+
+        <script>
+            // 2. This code loads the IFrame Player API code asynchronously.
+            var tag = document.createElement('script');
+
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            // 3. This function creates an <iframe> (and YouTube player)
+            //    after the API code downloads.
+            var player;
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('player', {
+                    height: '243',
+                    width: '400',
+                    videoId: 'ylhVTQSzBj4',
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+
+            // 4. The API will call this function when the video player is ready.
+            //function onPlayerReady(event) {
+            //    event.target.playVideo();
+            //}
+
+            function startVideo() {
+                player.playVideo();
+            }
+
+            //// 5. The API calls this function when the player's state changes.
+            ////    The function indicates that when playing a video (state=1),
+            ////    the player should play for six seconds and then stop.
+            //var done = false;
+            //function onPlayerStateChange(event) {
+            //    if (event.data == YT.PlayerState.PLAYING && !done) {
+            //        setTimeout(stopVideo, 6000);
+            //        done = true;
+            //    }
+            //}
+            //function stopVideo() {
+            //    player.stopVideo();
+            //}
+        </script>-->
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+</html>
